@@ -1,0 +1,22 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+    <h2>hello spring!!</h2>
+    <a href="/req1">req1</a>
+    <a href="/req2?q1=안녕&q2=1234">req2</a>
+    <a href="/req4">req4</a>
+    <a href="/req5">req5</a>
+
+    <form action="/req3">
+        <input type="text" name="p1"><br>
+        <input type="text" name="p2"><br>
+        <input type="text" name="p3"><br>
+        <input type="submit" value="확인">
+    </form>
+
+
+</body>
+</html>
