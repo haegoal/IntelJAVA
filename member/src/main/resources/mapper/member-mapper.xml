@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 반드시 작성!
+    member memeber mamber
+ -->
+<mapper namespace="Member">
+    <insert id="save" parameterType="member">
+        insert into member_table(memberEmail, memberPassword, memberName, memberBirth, memberMobile)
+            values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberBirth}, #{memberMobile})
+    </insert>
+    <select id="login" parameterType="member" resultType="member">
+        select * from member_table where memberEmail=#{memberEmail} and memberPassword=#{memberPassword}
+    </select>
+    <select id="findAll" resultType="member">
+        select * from member_table
+    </select>
+    <select id="findById" parameterType="Long" resultType="member">
+        select * from member_table where id=#{id}
+    </select>
+    <delete id="delete" parameterType="Long">
+        delete from member_table where id=#{id}
+    </delete>
+    <select id="findByEmail" parameterType="String" resultType="member">
+        select * from member_table where memberEmail=#{memberEmail}
+    </select>
+    <update id="update" parameterType="member">
+        update member_table set memberName=#{memberName}, memberMobile=#{memberMobile} where id=#{id}
+    </update>
+</mapper>
+
+
+
+
+
+
+
+
+

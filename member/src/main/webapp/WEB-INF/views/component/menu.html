@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .menu {
+            display: flex;
+            align-items: center;
+            background-color: black;
+        }
+
+        .menu-item {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+
+        /* menu-item 클래스가 적용된 요소 내부의 a 태그 요소 */
+        .menu-item a {
+            text-decoration: none;
+            /* a태그는 기본적으로 inline 요소
+                inline 요소는 높이, 너비를 가질 수 없음.
+                높이, 너비를 가지려면 block 요소여야 함.
+                아래 문법은 block요소로 하는 방법임.
+             */
+            display: block;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .menu-item a:hover {
+            background-color: gray;
+        }
+
+        #login-area {
+            display: flex;
+        }
+
+        #login-area a {
+
+        }
+    </style>
+</head>
+<body>
+<div id="nav">
+    <ul class="menu">
+        <li class="menu-item">
+            <a href="/">index</a>
+        </li>
+        <li class="menu-item">
+            <a href="/save">회원가입</a>
+        </li>
+<!--        <li class="menu-item">-->
+<!--            <a href="/login">로그인</a>-->
+<!--        </li>-->
+        <li class="menu-item">
+            <a href="/members">회원목록</a>
+        </li>
+        <!-- 로그인 여부에 따라 로그인했으면 oo님 환영합니다. 로그아웃링크 보이고
+             로그인 하지 않았으면 로그인 이 보이도록
+        -->
+        <li class="menu-item" id="login-area">
+
+        </li>
+    </ul>
+</div>
+<script>
+    const loginArea = document.getElementById("login-area");
+    const loginEmail = 'aa';
+    console.log(loginEmail.length);
+    if (loginEmail.length != 0) {
+        // 로그인 했음
+        loginArea.innerHTML = "<a href='/mypage'>" + loginEmail + "님 환영해요!</a> " +
+                                "<a href='/logout'>logout</a>";
+    } else {
+        // 로그인 안했음
+        loginArea.innerHTML = "<a href='/login'>로그인</a>";
+    }
+</script>
+</body>
+
+</html>
