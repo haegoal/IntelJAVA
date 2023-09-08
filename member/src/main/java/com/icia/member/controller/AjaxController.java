@@ -98,5 +98,15 @@ public class AjaxController {
 
     }
 
+    @GetMapping("/memberSearch")
+    public ResponseEntity memberSearch(@RequestParam("id") Long id){
+        MemberDTO memberDTO = memberService.findById(id);
+        if(memberDTO!=null){
+            return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }

@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0304b8ad-bcdf-43ec-af06-2d0923cbf9aa" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/icia/member/controller/AjaxController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/icia/member/controller/AjaxController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberList.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberSave.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberSave.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,17 +43,22 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/data/spring_framework_community/member",
-    "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "3d0a8008bc8fa194a060875d5ed8fdd4"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/data/spring_framework_community/member&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;3d0a8008bc8fa194a060875d5ed8fdd4&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Tomcat 9.0.80" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.80" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="$PROJECT_DIR$/../../../Program Files/Amazon Corretto/jdk17.0.7_7" nameIsGenerated="true">
       <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=UTF-8" />
@@ -154,7 +160,8 @@
       <option name="presentableId" value="Default" />
       <updated>1694066555466</updated>
       <workItem from="1694066558043" duration="528000" />
-      <workItem from="1694067134334" duration="3039000" />
+      <workItem from="1694067134334" duration="5047000" />
+      <workItem from="1694130003358" duration="18422000" />
     </task>
     <servers />
   </component>

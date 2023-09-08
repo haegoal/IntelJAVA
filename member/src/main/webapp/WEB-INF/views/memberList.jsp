@@ -6,6 +6,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/resources/css/main.css">
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
         table {
             margin: auto;
@@ -30,7 +31,7 @@
             <c:forEach items="${memberList}" var="member">
                 <tr>
                     <td>${member.id}</td>
-                    <td>${member.memberEmail}</td>
+                    <td onclick="search_fu(${member.id})" style="cursor: pointer">${member.memberEmail} </td>
                     <td>${member.memberName}</td>
                     <td>${member.memberBirth}</td>
                     <td>${member.memberMobile}</td>
@@ -45,11 +46,42 @@
             </c:forEach>
         </table>
     </div>
+    <div id="search">
+
+    </div>
 </div>
 
 <%@include file="component/footer.jsp" %>
 </body>
+
 <script>
+    
+    const search_fu = (id) => {
+        $.ajax({
+            type:"get",
+            url:"/memberSearch",
+            data:{id},
+            success:function(data){
+                console.log(data);
+                const resultArea = document.getElementById("search");
+                let result = "<table class='table table-dark'>";
+                result += "<th>" + "아이디" + "</th>"
+                result += "<th>" + "생일" + "</th>"
+                result += "<th>" + "이름" + "</th>"
+                result += "<th>" + "번호" + "</th>"
+                result += "<tr>";
+                result += "<td>" + data.id + "</td>";
+                result += "<td>" + data.memberBirth + "</td>";
+                result += "<td>" + data.memberName + "</td>";
+                result += "<td>" + data.memberMobile + "</td>";
+                result += "</tr>";
+                result += "</table>";
+                resultArea.innerHTML = result;
+            },error:function (){
+                console.log("회원정보가없습니다.");
+            }
+        })
+    }
     const detail_fn = (id) => {
         location.href = "/member?id=" + id;
     }
