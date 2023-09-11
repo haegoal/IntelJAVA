@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 반드시 작성!
+ -->
+<mapper namespace="Board">
+    <insert id="save" parameterType="board">
+        insert into board_table(boardWriter, boardpass, boardtitle, boardcontents) values (#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+    </insert>
+
+    <select id="list" resultType="board">
+        select * from board_table
+    </select>
+
+    <select id="findId" resultType="board" parameterType="Long">
+        select * from board_table where id= #{id}
+    </select>
+
+    <delete id="delete" parameterType="board">
+        delete from board_table where id = #{id} and boardPass = #{boardPass}
+    </delete>
+
+    <select id="login" resultType="board" parameterType="board">
+        select * from board_table where id= #{id} and boardPass = #{boardPass}
+    </select>
+
+    <update id="update" parameterType="board">
+        update board_table set boardTitle = #{boardTitle}, boardContents = #{boardContents}, boardHits = #{boardHits} where id = #{id}
+    </update>
+
+    <select id="search" resultType="board" parameterType="java.util.HashMap">
+        SELECT * FROM board_table WHERE KEY = #{k} AND #{q} LIKE CONCAT('%', #{q}, '%')
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
