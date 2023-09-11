@@ -13,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/icia/member/controller/AjaxController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/icia/member/controller/AjaxController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberList.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberSave.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberSave.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberUpdate.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/memberUpdate.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,6 +163,9 @@
       <workItem from="1694066558043" duration="528000" />
       <workItem from="1694067134334" duration="5047000" />
       <workItem from="1694130003358" duration="18422000" />
+      <workItem from="1694156851695" duration="164000" />
+      <workItem from="1694157328176" duration="75000" />
+      <workItem from="1694388966660" duration="8736000" />
     </task>
     <servers />
   </component>

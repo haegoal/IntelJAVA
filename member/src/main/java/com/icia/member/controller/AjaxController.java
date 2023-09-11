@@ -98,7 +98,7 @@ public class AjaxController {
 
     }
 
-    @GetMapping("/memberSearch")
+    @GetMapping("/me    mberSearch")
     public ResponseEntity memberSearch(@RequestParam("id") Long id){
         MemberDTO memberDTO = memberService.findById(id);
         if(memberDTO!=null){

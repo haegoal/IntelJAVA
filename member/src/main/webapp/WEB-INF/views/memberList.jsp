@@ -55,17 +55,17 @@
 </body>
 
 <script>
-    
+
     const search_fu = (id) => {
         $.ajax({
-            type:"get",
-            url:"/memberSearch",
-            data:{id},
-            success:function(data){
+            type: "get",
+            url: "/memberSearch",
+            data: {id},
+            success: function (data) {
                 console.log(data);
                 const resultArea = document.getElementById("search");
                 let result = "<table class='table table-dark'>";
-                result += "<th>" + "아이디" + "</th>"
+                result += "<th>" + "아이디" + "</th>";
                 result += "<th>" + "생일" + "</th>"
                 result += "<th>" + "이름" + "</th>"
                 result += "<th>" + "번호" + "</th>"
@@ -77,7 +77,7 @@
                 result += "</tr>";
                 result += "</table>";
                 resultArea.innerHTML = result;
-            },error:function (){
+            }, error: function () {
                 console.log("회원정보가없습니다.");
             }
         })
