@@ -1,6 +1,7 @@
 package com.icia.board.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BoardDTO {
@@ -11,5 +12,6 @@ public class BoardDTO {
     private String boardContents;
     private String createdAt;
     private int boardHits;
-    private String fileAttached;
+    private int fileAttached;
+    private MultipartFile boardFile;
 }

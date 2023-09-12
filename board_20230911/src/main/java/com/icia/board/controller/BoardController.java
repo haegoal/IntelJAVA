@@ -1,6 +1,8 @@
 package com.icia.board.controller;
 
 import com.icia.board.dto.BoardDTO;
+import com.icia.board.dto.BoardFileDTO;
+import com.icia.board.dto.CommentDTO;
 import com.icia.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class BoardController {
         return "boardSave";
     }
     @PostMapping("/board/save")
-    public String save(@ModelAttribute BoardDTO boardDTO){
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
         return "redirect:/board/";
     }
@@ -37,11 +40,22 @@ public class BoardController {
     }
 
     @GetMapping("/board")
-    public String findId(@RequestParam("id") Long id,Model model){
+    public String findId(@RequestParam("id") Long id,Model model, String a){
         BoardDTO boardDTO = boardService.findId(id);
         boardDTO.setBoardHits(boardDTO.getBoardHits()+1);
         boardService.update(boardDTO);
+        if(boardDTO.getFileAttached() ==1 ){
+            BoardFileDTO boardFileDTO = boardService.findFile(id);
+            model.addAttribute("boardFile", boardFileDTO);
+        }
+
         model.addAttribute("result", boardDTO);
+        List<CommentDTO> commentDTOList = boardService.list(id);
+        if(commentDTOList.size()!=0){
+            model.addAttribute("cl", commentDTOList);
+        }else{
+            model.addAttribute("cl", a);
+        }
         return "boardDetail";
     }
 
@@ -89,16 +103,16 @@ public class BoardController {
     }
 
     @GetMapping("/board/search")
-    public String search(@RequestParam("key") String key, @RequestParam("query") String query){
+    public ResponseEntity search(@RequestParam("key") String key, @RequestParam("query") String query){
+        System.out.println("key = " + key + ", query = " + query);
         HashMap<String, String> map = new HashMap<>();
         map.put("k", key);
         map.put("q",query);
         List<BoardDTO> boardDTOList = boardService.search(map);
         if(boardDTOList!=null){
-            System.out.println("boardDTOList = " + boardDTOList);
+            return new ResponseEntity<>(boardDTOList, HttpStatus.OK);
         }else{
-            System.out.println("없음");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return "redirect:/board/";
     }
 }
