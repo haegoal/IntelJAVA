@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardRepository {
@@ -53,7 +54,15 @@ public class BoardRepository {
         sql.insert("Board.saveFile", boardFileDTO);
     }
 
-    public BoardFileDTO findFile(Long boardId) {
-        return sql.selectOne("Board.findFile", boardId);
+    public List<BoardFileDTO> findFile(Long boardId) {
+        return sql.selectList("Board.findFile", boardId);
+    }
+
+    public List<BoardDTO> paginglist(Map<String, Integer> pagingMap) {
+        return sql.selectList("Board.paging", pagingMap);
+    }
+
+    public int boardCount() {
+        return sql.selectOne("Board.count");
     }
 }

@@ -5,16 +5,30 @@
 <!-- namespace 반드시 작성!
  -->
 <mapper namespace="Board">
-    <insert id="save" parameterType="board">
-        insert into board_table(boardWriter, boardpass, boardtitle, boardcontents) values (#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
+        insert into board_table(boardWriter, boardpass, boardtitle, boardcontents, fileAttached) values (#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents}, #{fileAttached})
     </insert>
+
+    <insert id="saveFile" parameterType="boardFile">
+        insert into board_file_table(originalFileName, storedFileName, boardId)
+        values (#{originalFileName}, #{storedFileName}, #{boardId})
+    </insert>
+
+    <select id="findFile" parameterType="Long" resultType="boardFile">
+        select * from board_file_table where boardId = #{boardId}
+    </select>
+
+    <select id="count" resultType="Integer">
+        select count(id) from board_table
+    </select>
+
 
     <select id="list" resultType="board">
         select * from board_table
     </select>
 
     <select id="findId" resultType="board" parameterType="Long">
-        select * from board_table where id= #{id}
+        select * from board_table where id= #{id} order by id desc
     </select>
 
     <delete id="delete" parameterType="board">
@@ -30,9 +44,14 @@
     </update>
 
     <select id="search" resultType="board" parameterType="java.util.HashMap">
-        SELECT * FROM board_table WHERE KEY = #{k} AND #{q} LIKE CONCAT('%', #{q}, '%')
+        SELECT * FROM board_table WHERE ${k} LIKE CONCAT('%', #{q}, '%')
     </select>
 
+    <select id="paging" parameterType="java.util.HashMap" resultType="board">
+        select id, boardWriter, boardTitle,
+               date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits
+        from board_table order by id desc limit #{start}, #{limit}
+    </select>
 </mapper>
 
 

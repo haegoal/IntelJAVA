@@ -3,6 +3,8 @@ package com.icia.board.dto;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Data
 public class BoardDTO {
     private Long id;
@@ -13,5 +15,5 @@ public class BoardDTO {
     private String createdAt;
     private int boardHits;
     private int fileAttached;
-    private MultipartFile boardFile;
+    private List<MultipartFile> boardFile;
 }

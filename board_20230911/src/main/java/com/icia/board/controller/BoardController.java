@@ -3,6 +3,7 @@ package com.icia.board.controller;
 import com.icia.board.dto.BoardDTO;
 import com.icia.board.dto.BoardFileDTO;
 import com.icia.board.dto.CommentDTO;
+import com.icia.board.dto.PageDTO;
 import com.icia.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,33 +30,38 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
-        return "redirect:/board/";
+        return "redirect:/board/list";
     }
 
-    @GetMapping("/board/")
-    public String list(Model model){
-        List<BoardDTO> boardDTOList = boardService.list();
-        model.addAttribute("board", boardDTOList);
+    @GetMapping("/board/list")
+    public String list(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                       Model model){
+        List<BoardDTO> boardDTOList = boardService.paginglist(page);
+        model.addAttribute("boardList", boardDTOList);
+        PageDTO pageDTO = boardService.pageNumber(page);
+        model.addAttribute("paging", pageDTO);
         return "boardList";
     }
 
     @GetMapping("/board")
-    public String findId(@RequestParam("id") Long id,Model model, String a){
+    public String findId(@RequestParam("id") Long id,
+                         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                         Model model){
         BoardDTO boardDTO = boardService.findId(id);
         boardDTO.setBoardHits(boardDTO.getBoardHits()+1);
         boardService.update(boardDTO);
         if(boardDTO.getFileAttached() ==1 ){
-            BoardFileDTO boardFileDTO = boardService.findFile(id);
-            model.addAttribute("boardFile", boardFileDTO);
+            List<BoardFileDTO> boardFileList = boardService.findFile(id);
+            model.addAttribute("boardFileList", boardFileList);
         }
-
         model.addAttribute("result", boardDTO);
         List<CommentDTO> commentDTOList = boardService.list(id);
         if(commentDTOList.size()!=0){
             model.addAttribute("cl", commentDTOList);
         }else{
-            model.addAttribute("cl", a);
+            model.addAttribute("cl", null);
         }
+        model.addAttribute("page", page);
         return "boardDetail";
     }
 
