@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 반드시 작성!
+ -->
+<mapper namespace="Comment">
+    <insert id="save" parameterType="comment">
+        insert into comment_table(commentWriter, commentContents, boardId) values (#{commentWriter}, #{commentContents}, #{boardId})
+    </insert>
+
+    <select id="list" parameterType="Long" resultType="comment">
+        select * from comment_table where boardId = #{id}
+    </select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
