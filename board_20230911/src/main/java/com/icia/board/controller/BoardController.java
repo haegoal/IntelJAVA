@@ -5,6 +5,7 @@ import com.icia.board.dto.BoardFileDTO;
 import com.icia.board.dto.CommentDTO;
 import com.icia.board.dto.PageDTO;
 import com.icia.board.service.BoardService;
+import org.apache.taglibs.standard.lang.jstl.ModulusOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 
@@ -33,18 +35,11 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/board/list")
-    public String list(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                       Model model){
-        List<BoardDTO> boardDTOList = boardService.paginglist(page);
-        model.addAttribute("boardList", boardDTOList);
-        PageDTO pageDTO = boardService.pageNumber(page);
-        model.addAttribute("paging", pageDTO);
-        return "boardList";
-    }
 
     @GetMapping("/board")
     public String findId(@RequestParam("id") Long id,
+                         @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                         @RequestParam(value = "key", required = false, defaultValue = "boardTitle") String key,
                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                          Model model){
         BoardDTO boardDTO = boardService.findId(id);
@@ -62,6 +57,8 @@ public class BoardController {
             model.addAttribute("cl", null);
         }
         model.addAttribute("page", page);
+        model.addAttribute("query", query);
+        model.addAttribute("key", key);
         return "boardDetail";
     }
 
@@ -108,17 +105,48 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/board/search")
-    public ResponseEntity search(@RequestParam("key") String key, @RequestParam("query") String query){
-        System.out.println("key = " + key + ", query = " + query);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("k", key);
-        map.put("q",query);
-        List<BoardDTO> boardDTOList = boardService.search(map);
-        if(boardDTOList!=null){
-            return new ResponseEntity<>(boardDTOList, HttpStatus.OK);
+    @GetMapping("/board/list")
+    public String list(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                       @RequestParam(value = "query", required = false, defaultValue = "") String query,
+                       @RequestParam(value = "key", required = false, defaultValue = "boardTitle") String key,
+                       Model model){
+
+        List<BoardDTO> boardDTOList =null;
+        PageDTO pageDTO = null;
+
+        if(query.equals("")){
+            boardDTOList = boardService.paginglist(page);
+            pageDTO = boardService.pageNumber(page);
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            boardDTOList = boardService.search(key, query, page);
+            pageDTO = boardService.searchPageNumber(key, query, page);
         }
+        model.addAttribute("boardList", boardDTOList);
+        model.addAttribute("paging", pageDTO);
+        model.addAttribute("query", query);
+        model.addAttribute("page", page);
+        return "boardList";
     }
+
+//    @GetMapping("/board/search")
+//    public String search(@RequestParam("key") String key,
+//                                 @RequestParam("query") String query,
+//                                 @RequestParam(value = "page", required = false, defaultValue = "1")int page,
+//                                 Model model)
+//                                {
+//        System.out.println("key = " + key + ", query = " + query);
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("k", key);
+//        map.put("q",query);
+//
+//        int pageLimit = 3;
+//        int pageingStart = (page -1) * pageLimit;
+//        map.put("start", pageingStart);
+//        map.put("limit", pageLimit);
+//        List<BoardDTO> boardDTOList = boardService.search(map);
+//        model.addAttribute("boardList", boardDTOList);
+//        PageDTO pageDTO = boardService.searchPageNumber(key, query, page);
+//        model.addAttribute("paging", pageDTO);
+//        return "boardList";
+//    }
 }

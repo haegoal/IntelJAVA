@@ -11,18 +11,16 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="col-2">
-    <div class="input-group">
-        <select class="form-select" id="key">
-            <option selected value="boardWriter">작성자</option>
-            <option value="boardTitle">제목</option>
-            <option value="boardContents">내용</option>
-            <option value="boardHits">조회수</option>
-        </select>
-        <input id="query" class="form-control" placeholder="검색어">
-        <button class="btn btn-primary" onclick="query_fn()">검색</button>
+    <div class="container" id="search-area">
+        <form action="/board/list" method="get">
+            <select name="key">
+                <option value="boardTitle">제목</option>
+                <option value="boardWriter">작성자</option>
+            </select>
+            <input type="text" name="query" placeholder="검색어를 입력하세요">
+            <input type="submit" value="검색">
+        </form>
     </div>
-</div>
 <div class="container" id="list">
     <table class="table table-striped table-hover text-center">
         <tr>
@@ -35,7 +33,7 @@
         <c:forEach items="${boardList}" var="board">
             <tr>
                 <td>${board.id}</td>
-                <td><a href="/board?id=${board.id}&page=${paging.page}">${board.boardTitle}</a></td>
+                <td><a href="/board?id=${board.id}&page=${paging.page}&query=${query}&key=${key}">${board.boardTitle}</a></td>
                 <td>${board.boardWriter}</td>
                 <td>${board.createdAt}</td>
                 <td>${board.boardHits}</td>
@@ -57,7 +55,7 @@
             <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
             <c:otherwise>
                 <li class="page-item">
-                    <a class="page-link" href="/board/list?page=${paging.startPage}">[<<]</a>
+                    <a class="page-link" href="/board/list?page=${paging.startPage}&query=${query}&key=${key}">[<<]</a>
                 </li>
             </c:otherwise>
         </c:choose>
@@ -72,7 +70,7 @@
             <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
             <c:otherwise>
                 <li class="page-item">
-                    <a class="page-link" href="/board/list?page=${paging.page-1}">[이전]</a>
+                    <a class="page-link" href="/board/list?page=${paging.page-1}&query=${query}&key=${key}">[이전]</a>
                 </li>
             </c:otherwise>
         </c:choose>
@@ -89,7 +87,7 @@
 
                 <c:otherwise>
                     <li class="page-item">
-                        <a class="page-link" href="/board/list?page=${i}">${i}</a>
+                        <a class="page-link" href="/board/list?page=${i}&query=${query}&key=${key}">${i}</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -103,7 +101,7 @@
             </c:when>
             <c:otherwise>
                 <li class="page-item">
-                    <a class="page-link" href="/board/list?page=${paging.page+1}">[다음]</a>
+                    <a class="page-link" href="/board/list?page=${paging.page+1}&query=${query}&key=${key}">[다음]</a>
                 </li>
             </c:otherwise>
         </c:choose>
@@ -116,61 +114,11 @@
             </c:when>
             <c:otherwise>
                 <li class="page-item">
-                    <a class="page-link" href="/board/list?page=${paging.endPage}">[>>]</a>
+                    <a class="page-link" href="/board/list?page=${paging.endPage}&query=${query}&key=${key}">[>>]</a>
                 </li>
             </c:otherwise>
         </c:choose>
     </ul>
 </div>
 </body>
-<script>
-
-
-    const query_fn= () => {
-        const key = document.getElementById("key").value;
-        const query = document.getElementById("query").value;
-        $.ajax({
-            type: "get",
-            url: "/board/search",
-            data: {
-                key, query
-            },
-            success: function (data) {
-                const boardList = document.getElementById("list");
-                let result = "<table class='table'>";
-                result += "<tr>";
-                result += "<th>아이디</th>";
-                result += "<th>작성자</th>";
-                result += "<th>제목</th>";
-                result += "<th>내용</th>";
-                result += "<th>조회수</th>";
-                result += "<th>작성일</th>";
-                result += "</tr>";
-                for (let i in data) {
-                    result += "<tr style='cursor: pointer;'  onclick=search_fn("+data[i].id+")>";
-                    result += "<td>" + data[i].id + "</td>";
-                    result += "<td>" + data[i].boardWriter + "</td>";
-                    result += "<td>" + data[i].boardTitle + "</td>";
-                    result += "<td>" + data[i].boardContents + "</td>";
-                    result += "<td>" + data[i].boardHits + "</td>";
-                    result += "<td>" + data[i].createdAt + "</td>";
-                    result += "</tr>";
-                }
-                result += "</table>";
-                boardList.innerHTML = result;
-            },error:function (){
-                console.log("에러")
-            }
-        })
-    }
-
-    const search_fn = (id) => {
-        location.href = "/board?id=" + id;
-    }
-
-
-
-
-
-</script>
 </html>

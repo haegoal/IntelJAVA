@@ -43,7 +43,7 @@ public class BoardRepository {
         sql.update("Board.update", boardDTO);
     }
 
-    public List<BoardDTO> search(HashMap<String, String> map) {
+    public List<BoardDTO> search(HashMap<String, Object> map) {
         return sql.selectList("Board.search", map);
     }
     public List<CommentDTO> list(Long id) {
@@ -64,5 +64,9 @@ public class BoardRepository {
 
     public int boardCount() {
         return sql.selectOne("Board.count");
+    }
+
+    public int boardSearchCount(Map<String, String> pagingParams) {
+        return sql.selectOne("Board.searchCount", pagingParams);
     }
 }

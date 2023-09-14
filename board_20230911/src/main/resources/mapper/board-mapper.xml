@@ -22,6 +22,10 @@
         select count(id) from board_table
     </select>
 
+    <select id="searchCount" resultType="Integer" parameterType="java.util.HashMap">
+        select count(id) from board_table WHERE ${k} LIKE CONCAT('%', #{q}, '%')
+    </select>
+
 
     <select id="list" resultType="board">
         select * from board_table
@@ -46,7 +50,7 @@
     <select id="search" resultType="board" parameterType="java.util.HashMap">
         SELECT id, boardWriter, boardTitle,
                date_format(createdAt, "%y-%m-%d %H:%i:%s") createdAt, boardHits
-        FROM board_table WHERE ${k} LIKE CONCAT('%', #{q}, '%')
+        FROM board_table WHERE ${k} LIKE CONCAT('%', #{q}, '%') limit #{start}, #{limit}
     </select>
 
     <select id="paging" parameterType="java.util.HashMap" resultType="board">

@@ -42,7 +42,7 @@
 
                 <td><button class="btn btn-success" onclick="up_fn(${result.id})">수정</button></td>
                 <td><button class="btn btn-danger" onclick="del_fn(${result.id})">삭제</button></td>
-            <td><button onclick="list_fn(${page})">리스트</button></td>
+            <td><button onclick="list_fn()">리스트</button></td>
             </tr>
         </table>
     </div>
@@ -78,8 +78,11 @@
 <script>
     const list = document.getElementById("div-comment");
 
-    const list_fn = (page) => {
-      location.href="/board/list?page=" + page;
+    const list_fn = () => {
+        const page = '${page}'
+        const query = '${query}'
+        const key = '${key}'
+      location.href="/board/list?page=" + page + "&query=" + query + "&key=" + key;
     }
 
     const com_fn = (boardId) => {
