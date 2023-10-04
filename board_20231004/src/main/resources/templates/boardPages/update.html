@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+
+<div class="container">
+<!--  <form action="/board/update" method="post">-->
+    <input type="hidden" name="id" th:value="${board.id}"><br>
+    <input type="text" placeholder="작성자" name="boardWriter" th:value="${board.boardWriter}"><br>
+    <input type="text" placeholder="제목" name="boardTitle" th:value="${board.boardTitle}"><br>
+    <input type="text" placeholder="비번" name="boardPass" th:value="${board.boardPass}"><br>
+    <input type="text" placeholder="내용" name="boardContents" th:value="${board.boardContents}"><br>
+    <input type="button" value="수정" onclick="update_fn()"><br>
+<!--  </form>-->
+</div>
+
+<script th:inline="javascript">
+    const update_fn = () => {
+      const boardWriter = document.querySelector("[name = 'boardWriter']").value;
+      const id = document.querySelector("[name = 'id']").value;
+      const boardTitle = document.querySelector("[name = 'boardTitle']").value;
+      const boardPass = document.querySelector("[name = 'boardPass']").value;
+      const boardContents = document.querySelector("[name = 'boardContents']").value;
+      $.ajax({
+        type:"put",
+        url:`/board/${id}`,
+        data:{
+          id,  boardWriter, boardPass, boardTitle, boardContents
+        },
+        success:function(){
+          location.href=`/board/${id}`;
+        }
+      })
+    }
+</script>
+</body>
+</html>

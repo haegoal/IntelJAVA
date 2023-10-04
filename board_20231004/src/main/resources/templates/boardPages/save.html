@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+
+<div class="container">
+  <form action="/board/save" method="post">
+    <input type="text" placeholder="작성자" name="boardWriter"><br>
+    <input type="text" placeholder="제목" name="boardTitle"><br>
+    <input type="text" placeholder="비번" name="boardPass"><br>
+    <input type="text" placeholder="내용" name="boardContents"><br>
+    <input type="submit" value="작성"><br>
+  </form>
+</div>
+
+</body>
+</html>
+
+</body>
+</html>
